@@ -1,0 +1,27 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  background: #010510;
+}
+
+body {
+  min-width: 1440px;
+}
+
+img {
+  display: block;
+  max-width: none;
+}
+
+p,
+h1,
+h2 {
+  margin: 0;
+}

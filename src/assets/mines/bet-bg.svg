@@ -1,0 +1,16 @@
+<svg viewBox="0 0 284 74" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <g transform="matrix(72.937 -23.082 8.9355 19.005 142.51 41.457)" opacity="1">
+    <rect id="quad" height="71.096" width="32.426" fill="url(#grad)" shape-rendering="crispEdges" />
+    <use href="#quad" transform="scale(1 -1)" />
+    <use href="#quad" transform="scale(-1 1)" />
+    <use href="#quad" transform="scale(-1 -1)" />
+  </g>
+  <defs>
+    <linearGradient id="grad" gradientUnits="userSpaceOnUse" x2="5" y2="5">
+      <stop stop-color="rgba(38,41,64,0)" offset="0" />
+      <stop stop-color="rgba(69,37,160,0.5)" offset="0.5" />
+      <stop stop-color="rgba(85,34,207,0.75)" offset="0.75" />
+      <stop stop-color="rgba(100,32,255,1)" offset="1" />
+    </linearGradient>
+  </defs>
+</svg>

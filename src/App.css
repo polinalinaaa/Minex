@@ -1,0 +1,443 @@
+.screen {
+  width: 1440px;
+  height: 1152px;
+  background: #010510;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 48px 48px 21px;
+  color: #fff;
+  font-family: Arimo, sans-serif;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 86px;
+  flex-shrink: 0;
+}
+
+.brand-row,
+.heading-row,
+.controls-heading,
+.board-heading,
+.balance-row,
+.payout-row,
+.board-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+}
+
+.wordmark p {
+  font-family: "BBH Bartle", sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  color: #fff;
+}
+
+.brand-spacer {
+  width: 60px;
+  height: 18px;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.wallet {
+  display: flex;
+  align-items: center;
+}
+
+.balance {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 56px;
+  padding: 14px 16px;
+  background: #050d20;
+  border: 1px solid #28224a;
+  border-radius: 8px 0 0 8px;
+}
+
+.balance p {
+  font-size: 21px;
+  font-weight: 700;
+  color: #00d5ff;
+}
+
+.credits {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 0 16px;
+  background: #821cff;
+  border-radius: 0 10px 10px 0;
+}
+
+.credits p {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+}
+
+.header-divider {
+  height: 1px;
+  background: #28224a;
+}
+
+.workspace {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.nav {
+  width: 80px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10.75px;
+  padding: 14px 0;
+  background: #050d20;
+  border-radius: 13px;
+  box-shadow: inset 0 0 0 1px #28224a;
+  overflow: hidden;
+}
+
+.nav-item {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-item-active {
+  background: #821cff;
+  border-radius: 10px;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.game {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.heading-row {
+  height: 68px;
+  justify-content: flex-start;
+}
+
+.game-title {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.breadcrumb {
+  font-size: 16px;
+  color: #abb9e0;
+}
+
+.game-title h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #00d5ff;
+}
+
+.panels {
+  display: flex;
+  gap: 14px;
+}
+
+.panel {
+  height: 722px;
+  flex-shrink: 0;
+  border-radius: 13px;
+  background-color: #000612;
+  box-shadow: inset 0 0 0 1px #28224a;
+  overflow: hidden;
+}
+
+.controls {
+  width: 639px;
+  padding: 21px;
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(
+    -40.06904504670348deg,
+    rgba(0, 213, 255, 0.2) 3.8878%,
+    rgba(0, 4, 14, 0.2) 60.059%
+  );
+}
+
+.controls-heading h2,
+.board-heading h2 {
+  font-size: 25px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.controls-heading p,
+.board-heading p,
+.field-label,
+.balance-row p {
+  font-size: 16px;
+  color: #abb9e0;
+}
+
+.bet-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+  padding-top: 40px;
+  width: 100%;
+}
+
+.bet-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.bet-amount {
+  width: 284px;
+  height: 74px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+  border: 1px solid #414768;
+  border-radius: 8px;
+  background-image: url("./assets/mines/bet-bg.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.bet-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bet-value p {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.divider-slot {
+  width: 0;
+  height: 32.148px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.divider-slot img {
+  transform: rotate(90deg);
+}
+
+.shortcuts {
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shortcut,
+.mine-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #262940;
+  border-radius: 6px;
+  color: #fff;
+  font-family: Arimo, sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.shortcut {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 1px solid #414768;
+}
+
+.mine-options {
+  display: flex;
+  gap: 7px;
+  width: 100%;
+}
+
+.mine-option {
+  flex: 1;
+  height: 48px;
+}
+
+.mine-option-selected {
+  background: #821cff;
+}
+
+.separator {
+  width: 100%;
+  padding-top: 35px;
+}
+
+.separator div {
+  height: 1px;
+  background: #30344d;
+}
+
+.payout {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  width: 100%;
+  padding: 39px 0;
+  font-size: 21px;
+}
+
+.payout-row span {
+  color: #abb9e0;
+}
+
+.payout-row strong {
+  font-weight: 700;
+  color: #fff;
+}
+
+.payout-row strong.cyan {
+  color: #00d5ff;
+}
+
+.start {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 100%;
+  height: 77px;
+  background: #821cff;
+  border-radius: 10px;
+}
+
+.start p {
+  font-size: 25px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.board {
+  width: 597px;
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  padding: 28px 21px 21px;
+  background-image: linear-gradient(
+    -41.997720135183414deg,
+    rgba(0, 213, 255, 0.2) 3.8878%,
+    rgba(0, 4, 14, 0.2) 60.059%
+  );
+}
+
+.mine-grid {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.tile-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.tile-row-107 {
+  height: 107px;
+}
+
+.tile-row-106 {
+  height: 106px;
+}
+
+.tile {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2a2e47;
+  border: 1.5px solid #414768;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.tile-gem {
+  background: #104b63;
+  border-color: #00d5ff;
+}
+
+.board-status {
+  font-size: 16px;
+}
+
+.board-status p:first-child {
+  color: #abb9e0;
+}
+
+.board-status p:last-child {
+  color: #00d5ff;
+}
