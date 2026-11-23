@@ -1,3 +1,53 @@
+:root {
+  --color-bg: #010510;
+  --color-surface: #000612;
+  --color-surface-raised: #050d20;
+  --color-surface-muted: #262940;
+  --color-border: #28224a;
+  --color-border-strong: #414768;
+  --border-primary: #945cff;
+  --border-secondary: #51447f;
+  --color-divider: #30344d;
+  --color-text: #ffffff;
+  --color-text-muted: #abb9e0;
+  --color-accent: #00d5ff;
+  --color-action: #821cff;
+  --color-link: #a679ff;
+  --color-danger: #ff4569;
+  --color-tile: #2a2e47;
+  --color-tile-gem: #104b63;
+  --font-ui: Arimo, sans-serif;
+  --font-brand: "BBH Bartle", sans-serif;
+  --radius-panel: 13px;
+  --radius-control: 10px;
+  --radius-field: 8px;
+  --btn-radius: var(--radius-control);
+  --motion-press: 120ms;
+  --motion-fast: 160ms;
+  --motion-base: 180ms;
+  --motion-enter: 240ms;
+  --ease-out: cubic-bezier(0.16, 0.84, 0.32, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --btn-duration: var(--motion-base);
+  --btn-primary: var(--color-accent);
+  --btn-primary-text: #fff;
+  --btn-secondary-bg: #050d20;
+  --btn-secondary-border: var(--color-accent);
+  --btn-control-bg: #1b2138;
+  --btn-control-border: #414768;
+  --btn-control-selected: linear-gradient(100deg, #6a2fe0 0%, #4a46f0 46%, #2f86ff 100%);
+  --btn-disabled-bg: #161a2b;
+  --btn-disabled-text: rgb(255 255 255 / 58%);
+  --btn-lg: 52px;
+  --btn-sm: 44px;
+  --btn-wide: clamp(56px, 8vh, 77px);
+  --space-3: 14px;
+  --space-4: 16px;
+  --space-5: 21px;
+  --shadow-panel: inset 0 0 0 1px var(--color-border);
+  color-scheme: dark;
+}
+
 *,
 *::before,
 *::after {
@@ -7,12 +57,42 @@
 html,
 body,
 #root {
+  height: 100%;
   margin: 0;
+  overflow: hidden;
   background: #010510;
 }
 
-body {
-  min-width: 1440px;
+body::before {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  /* Oversized so a −11° rotation still covers the viewport.
+     |cos 11°| + |sin 11°| ≈ 1.17; 180vw × 180vh is the safe margin.
+     The box itself stays centered on the viewport; only the gradient turns. */
+  width: 180vw;
+  height: 180vh;
+  left: -40vw;
+  top: -40vh;
+  /* Ellipse is sized to the viewport, not this box: radii 50√2
+     pass through the screen corners (stretch), then the layer
+     rotation aims that ellipse at −11° (rotate). */
+  background-image: radial-gradient(
+    ellipse 70.71vw 70.71vh at center,
+    #010510 0%,
+    #09061e 83%,
+    #370d6e 100%
+  );
+  background-repeat: no-repeat;
+  transform: rotate(-11deg);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  background: transparent;
 }
 
 img {
@@ -24,4 +104,14 @@ p,
 h1,
 h2 {
   margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
 }

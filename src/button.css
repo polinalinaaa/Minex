@@ -1,0 +1,320 @@
+.btn,
+.game-control {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  border-radius: var(--btn-radius);
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transform: scale(1);
+  transition:
+    background-color var(--motion-base) var(--ease-out),
+    border-color var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    filter var(--motion-fast) var(--ease-out),
+    color var(--motion-base) var(--ease-out),
+    transform var(--motion-press) var(--ease-out);
+}
+
+.btn {
+  position: relative;
+  border: 1px solid transparent;
+  color: var(--btn-primary-text);
+}
+
+.btn-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.btn-primary {
+  background: var(--btn-primary);
+  color: var(--btn-primary-text);
+}
+
+.btn-secondary {
+  background: var(--btn-secondary-bg);
+  border-color: var(--btn-secondary-border);
+  color: var(--btn-primary-text);
+}
+
+.btn-lg {
+  min-height: var(--btn-lg);
+  padding: 12px 24px;
+  font-size: 18px;
+}
+
+.btn-md {
+  height: 48px;
+  min-height: 48px;
+  padding: 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.btn-sm {
+  min-height: var(--btn-sm);
+  min-width: var(--btn-sm);
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+.btn-wide {
+  width: 100%;
+  min-height: var(--btn-wide);
+  margin-top: auto;
+  padding: 12px 16px;
+  font-size: clamp(18px, 2vw, 25px);
+}
+
+.credits-inline.btn {
+  margin-top: 12px;
+}
+
+.btn.credits {
+  height: 56px;
+  min-height: 56px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 0 12px 12px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.btn.is-loading {
+  cursor: progress;
+}
+
+.btn.is-loading .btn-label {
+  visibility: hidden;
+}
+
+.btn-spinner {
+  position: absolute;
+  inset: 0;
+  width: 1.15em;
+  height: 1.15em;
+  margin: auto;
+  border: 2px solid rgb(255 255 255 / 35%);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btn-spin 700ms linear infinite;
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.game-control {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 8px;
+  border: 1px solid var(--btn-control-border);
+  background: var(--btn-control-bg);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.game-control.mine-option {
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  min-height: 48px;
+  height: auto;
+}
+
+.game-control.mine-option::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background-color: #4a3fe0;
+  background-image: var(--btn-control-selected);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 35%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-base) var(--ease-out);
+}
+
+.game-control.shortcut {
+  flex: 1;
+  align-self: stretch;
+  height: auto;
+}
+
+.game-control.is-selected:not(:disabled) {
+  background-color: #4a3fe0;
+  background-image: var(--btn-control-selected);
+  border-color: #d9ccff;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 35%),
+    0 0 10px rgb(110 70 255 / 40%);
+}
+
+.game-control.mine-option.is-selected:not(:disabled) {
+  background-image: none;
+  box-shadow: 0 0 10px rgb(110 70 255 / 40%);
+}
+
+.game-control.mine-option:disabled::before {
+  transition-duration: 0s;
+}
+
+.game-control.mine-option.is-selected:not(:disabled)::before {
+  opacity: 1;
+}
+
+.btn-icon {
+  box-sizing: border-box;
+  border-radius: var(--btn-radius);
+  transition:
+    background-color var(--motion-base) var(--ease-out),
+    border-color var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    filter var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover:not(:disabled):not(.is-loading) {
+    filter: brightness(1.08);
+  }
+
+  .btn-secondary:hover:not(:disabled):not(.is-loading) {
+    background: color-mix(in srgb, var(--color-accent) 16%, var(--btn-secondary-bg));
+  }
+
+  .game-control:hover:not(:disabled):not(.is-selected) {
+    filter: brightness(1.1);
+    border-color: #6d7694;
+  }
+
+  .game-control.is-selected:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+
+  .btn-icon:hover:not(:disabled) {
+    filter: brightness(1.12);
+  }
+}
+
+.btn:active:not(:disabled):not(.is-loading) {
+  filter: brightness(0.9);
+  transform: scale(0.98);
+}
+
+.btn-icon:active:not(:disabled) {
+  filter: brightness(0.9);
+}
+
+.game-control:active:not(:disabled),
+.game-control:hover:active:not(:disabled),
+.game-control.is-selected:active:not(:disabled),
+.game-control.is-selected:hover:active:not(:disabled) {
+  transform: scale(0.98);
+  background-color: #1e144e;
+  background-image: none;
+  border-color: #9a8cff;
+  box-shadow: inset 0 3px 8px rgb(0 0 0 / 65%);
+  color: #fff;
+  filter: none;
+  transition-duration: 0s, 0s, 0s, 0s, 0s, var(--motion-press);
+}
+
+.game-control.mine-option:active:not(:disabled) {
+  background-color: #1e144e;
+  background-image: none;
+  border-color: #9a8cff;
+  box-shadow: inset 0 3px 8px rgb(0 0 0 / 65%);
+}
+
+.game-control.mine-option:active:not(:disabled)::before {
+  opacity: 0;
+  transition-duration: 0s;
+}
+
+.btn:focus-visible,
+.game-control:focus-visible,
+.btn-icon:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.btn-primary:focus-visible {
+  outline-color: #fff;
+}
+
+.btn:disabled,
+.btn.is-loading {
+  background-image: none;
+  box-shadow: none;
+  filter: none;
+}
+
+.btn-primary:disabled:not(.is-loading) {
+  background-color: #14566a;
+  color: rgb(255 255 255 / 78%);
+}
+
+.btn-secondary:disabled {
+  background: var(--btn-disabled-bg);
+  border-color: #2c3148;
+  color: var(--btn-disabled-text);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.game-control:disabled,
+.game-control:disabled:hover,
+.game-control:disabled:active {
+  background-color: var(--btn-disabled-bg);
+  background-image: none;
+  border-color: #2a3048;
+  color: var(--btn-disabled-text);
+  box-shadow: none;
+  filter: none;
+  cursor: not-allowed;
+}
+
+.game-control.is-selected:disabled {
+  color: rgb(255 255 255 / 70%);
+  border-color: #6a5a98;
+}
+
+.btn-icon:disabled,
+.btn-icon:disabled:hover,
+.btn-icon:disabled:active {
+  filter: none;
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .game-control,
+  .game-control.mine-option::before,
+  .btn-icon,
+  .btn-spinner {
+    transition: none;
+    animation: none;
+  }
+}

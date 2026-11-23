@@ -1,0 +1,313 @@
+.daily-spin {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  padding: 24px;
+  background-color: #070b21;
+  background-image: url("./assets/mines/rewards/daily-spin-bg.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 0 1px var(--border-primary);
+}
+
+.daily-spin-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  min-width: 0;
+}
+
+.daily-spin-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.daily-spin-heading h2 {
+  margin: 0;
+  min-width: 0;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.daily-spin-heading p {
+  margin: 0;
+  color: #abb9e0;
+  font-size: 16px;
+}
+
+.spin-shell {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  grid-area: wheel;
+}
+
+.spin-board {
+  --spin-bezel-w: 1024;
+  --spin-bezel-h: 512;
+  --spin-wheel-cx: 509.43;
+  --spin-wheel-cy: 486.28;
+  --spin-bar-y: 428;
+  --spin-wheel-r: 402.58;
+  /* ViewBox inner hole is half the cyan arc. Visible hub ends at the frame bar. */
+  --spin-hub-r: calc(var(--spin-wheel-r) * 0.5);
+  --spin-hub-mid-y: calc((var(--spin-wheel-cy) - var(--spin-hub-r) + var(--spin-bar-y)) / 2);
+  position: relative;
+  display: grid;
+  grid-template-areas: "wheel" "foot";
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+  container-type: inline-size;
+  container-name: spin;
+}
+
+/*
+  PNG 1024×512, including transparent padding.
+  Inner cyan arc is a circle at (509.43, 486.28), R=402.58.
+  ViewBox radius 100 maps to that circle; sector OUTER 96 leaves a uniform gap.
+  The stage clips on the bar top (y=428), above the rotation center.
+*/
+.spin-frame {
+  --spin-bezel-w: 1024;
+  --spin-bezel-h: 512;
+  --spin-wheel-cx: 509.43;
+  --spin-wheel-cy: 486.28;
+  --spin-bar-y: 428;
+  --spin-wheel-side: 805.16;
+  position: relative;
+  width: min(100%, 800px);
+  min-width: 0;
+  margin-bottom: 0;
+  aspect-ratio: 2 / 1;
+  isolation: isolate;
+  container-type: inline-size;
+}
+
+.spin-bezel {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.spin-pointer {
+  position: absolute;
+  z-index: 5;
+  left: calc(var(--spin-wheel-cx) / var(--spin-bezel-w) * 100%);
+  /* Glow tip (96.53% down the PNG) lands just inside the top sector. Outer rim is 0.96. */
+  top: calc((var(--spin-wheel-cy) - var(--spin-wheel-side) / 2 * 0.935) / var(--spin-bezel-h) * 100%);
+  /* Visible glow is 731/895 of the file; 10% of the wheel diameter. */
+  width: calc(10cqi * var(--spin-wheel-side) / var(--spin-bezel-w) * 895 / 731);
+  height: auto;
+  aspect-ratio: 895 / 1024;
+  transform: translate(-50%, -96.53%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.spin-stage {
+  position: absolute;
+  z-index: 1;
+  left: calc(var(--spin-wheel-cx) / var(--spin-bezel-w) * 100%);
+  top: calc((var(--spin-wheel-cy) - var(--spin-wheel-side) / 2) / var(--spin-bezel-h) * 100%);
+  width: calc(var(--spin-wheel-side) / var(--spin-bezel-w) * 100%);
+  height: calc((var(--spin-bar-y) - (var(--spin-wheel-cy) - var(--spin-wheel-side) / 2)) / var(--spin-bezel-h) * 100%);
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.spin-wheel-rotator {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.spin-wheel {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.spin-wedge {
+  stroke: #0a1428;
+  stroke-width: 1.35;
+  stroke-linejoin: round;
+  paint-order: stroke fill;
+  transition:
+    opacity 220ms ease,
+    filter 220ms ease;
+}
+
+.spin-wheel-rotator.has-winner .spin-wedge:not(.is-winner) {
+  opacity: 0.72;
+}
+
+.spin-wedge.is-winner {
+  opacity: 1;
+  stroke: #00d5ff;
+  stroke-width: 1.55;
+}
+
+.spin-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.spin-label {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35cqi;
+  min-width: 0;
+  transition: opacity 220ms ease;
+}
+
+.spin-wheel-rotator.has-winner .spin-label:not(.is-winner) {
+  opacity: 0.78;
+}
+
+.spin-label.is-winner {
+  opacity: 1;
+}
+
+.spin-label-gem {
+  /* Visible gem is about 3× the previous 27px box on an 800px frame. */
+  width: 10.1cqi;
+  height: auto;
+  flex-shrink: 0;
+  aspect-ratio: 1024 / 935;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 55%));
+}
+
+.spin-label-value {
+  color: #fff;
+  font-size: 4cqi;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 55%);
+}
+
+.spin-hub-timer {
+  position: absolute;
+  z-index: 6;
+  grid-area: wheel;
+  left: calc(var(--spin-wheel-cx) / var(--spin-bezel-w) * 100%);
+  top: calc(var(--spin-hub-mid-y) / var(--spin-bezel-h) * 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  width: max-content;
+  max-width: 70%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.spin-hub-timer.is-idle {
+  display: none;
+}
+
+.spin-hub-label {
+  margin: 0;
+  color: #9aa8c7;
+  font-size: clamp(11px, 2.8cqi, 14px);
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.spin-hub-countdown {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(24px, 7cqi, 40px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.spin-footer {
+  display: flex;
+  grid-area: foot;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: clamp(56px, 8vh, 77px);
+}
+
+.btn.spin-button {
+  width: min(100%, 800px);
+  margin-top: 0;
+  margin-inline: auto;
+}
+
+/* Hub opening is about 39% of the frame. Below this width the countdown covers the wedges. */
+@container spin (max-width: 560px) {
+  .spin-hub-timer {
+    position: relative;
+    left: auto;
+    top: auto;
+    grid-area: foot;
+    z-index: 1;
+    align-self: center;
+    justify-self: center;
+    width: auto;
+    max-width: 100%;
+    height: 64px;
+    margin: 0;
+    min-height: 64px;
+    transform: none;
+  }
+
+  .spin-board.is-cooling .spin-footer {
+    display: none;
+  }
+
+  .spin-hub-countdown {
+    color: #fff;
+    font-size: clamp(28px, 9cqi, 36px);
+    text-shadow: 0 0 12px rgb(0 213 255 / 35%);
+  }
+}
+
+@media (max-width: 640px) {
+  .daily-spin {
+    padding: 16px;
+  }
+}
