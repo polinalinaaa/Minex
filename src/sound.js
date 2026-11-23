@@ -24,6 +24,7 @@ let memory = createSoundMemory();
 let context = null;
 let master = null;
 let installed = false;
+let unlocking = false;
 const encoded = new Map();
 const decoded = new Map();
 const active = new Map();
@@ -101,23 +102,67 @@ function loadEncoded(id) {
   return encoded.get(id);
 }
 
-async function ensureContext() {
+function contextLocked(ctx) {
+  return ctx.state === "suspended" || ctx.state === "interrupted";
+}
+
+function playSilence(ctx) {
+  const frames = Math.max(1, Math.floor(ctx.sampleRate * 0.02));
+  const silence = ctx.createBuffer(1, frames, ctx.sampleRate);
+  const source = ctx.createBufferSource();
+  source.buffer = silence;
+  source.connect(ctx.destination);
+  source.start();
+}
+
+// iOS only counts touchend/click as a user gesture, and it ignores resume()
+// unless a buffer also starts in that same turn. pointerdown is too early.
+function primeContext() {
   const Ctx = window.AudioContext || window.webkitAudioContext;
   if (!Ctx) return null;
-  if (!context) {
+  if (!context || context.state === "closed") {
     context = new Ctx();
     master = context.createGain();
     applyGain();
     master.connect(context.destination);
   }
-  if (context.state === "suspended") {
+  if (!contextLocked(context)) return context;
+  if (!unlocking) {
+    unlocking = true;
     try {
-      await context.resume();
+      const pending = context.resume();
+      if (pending && typeof pending.finally === "function") {
+        pending.finally(() => {
+          unlocking = false;
+        });
+      } else {
+        unlocking = false;
+      }
+    } catch {
+      unlocking = false;
+    }
+    try {
+      playSilence(context);
+    } catch {
+      // The silent start is only an unlock. Real sounds use the same context.
+    }
+  } else {
+    context.resume()?.catch(() => {});
+  }
+  return context;
+}
+
+async function ensureContext() {
+  const ctx = primeContext();
+  if (!ctx) return null;
+  if (contextLocked(ctx)) {
+    try {
+      await ctx.resume();
     } catch {
       return null;
     }
   }
-  return context.state === "running" ? context : null;
+  return ctx.state === "running" ? ctx : null;
 }
 
 async function bufferFor(id, ctx) {
@@ -185,6 +230,7 @@ export function playSpinTick() {
   const now = performance.now();
   if (now - tickAt < TICK_GAP_MS) return;
   tickAt = now;
+  primeContext();
   void outputTick();
 }
 
@@ -231,6 +277,7 @@ export function playSound(id) {
   const decision = decideSound(id, memory, performance.now());
   memory = decision.memory;
   if (!decision.allow) return;
+  primeContext();
   void output(id);
 }
 
@@ -241,8 +288,14 @@ export function installSound() {
     void loadEncoded(id);
   });
   const arm = () => {
-    void ensureContext();
+    primeContext();
   };
-  window.addEventListener("pointerdown", arm, { capture: true, passive: true });
+  const armPointer = (event) => {
+    if (event.pointerType === "touch") return;
+    arm();
+  };
+  window.addEventListener("pointerdown", armPointer, { capture: true, passive: true });
+  window.addEventListener("touchend", arm, { capture: true, passive: true });
+  window.addEventListener("click", arm, { capture: true, passive: true });
   window.addEventListener("keydown", arm, { capture: true });
 }
