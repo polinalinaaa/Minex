@@ -270,7 +270,9 @@ export default function App() {
         <div className="brand-row">
           <div className="brand">
             <div className="wordmark">
-              <img src={logo} alt="minex" />
+              <button className="wordmark-home" type="button" onClick={() => openPage("home")}>
+                <img src={logo} alt="minex" />
+              </button>
             </div>
             <div className="brand-spacer" />
           </div>

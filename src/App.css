@@ -93,6 +93,17 @@
   min-width: 0;
 }
 
+.wordmark-home {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  line-height: 0;
+  cursor: pointer;
+}
+
 .wordmark img {
   width: auto;
   height: 64px;
